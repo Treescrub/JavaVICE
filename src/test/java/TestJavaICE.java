@@ -5,10 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestJavaICE {
 
-    // START CERTIFICATION TRIPLETS
-
     @Test
-    public void testEncrypt_ICE() {
+    public void certTripletICE_encrypt() {
         byte[] plaintext = {
                 (byte) 0xfe, (byte) 0xdc, (byte) 0xba, (byte) 0x98, (byte) 0x76, (byte) 0x54, (byte) 0x32, (byte) 0x10
         };
@@ -25,7 +23,7 @@ public class TestJavaICE {
     }
 
     @Test
-    public void testDecrypt_ICE() {
+    public void certTripletICE_decrypt() {
         byte[] plaintext = {
                 (byte) 0x7d, (byte) 0x6e, (byte) 0xf1, (byte) 0xef, (byte) 0x30, (byte) 0xd4, (byte) 0x7a, (byte) 0x96
         };
@@ -43,7 +41,7 @@ public class TestJavaICE {
 
 
     @Test
-    public void testEncrypt_ThinICE() {
+    public void certTripletThinICE_encrypt() {
         byte[] plaintext = {
                 (byte) 0xfe, (byte) 0xdc, (byte) 0xba, (byte) 0x98, (byte) 0x76, (byte) 0x54, (byte) 0x32, (byte) 0x10
         };
@@ -60,7 +58,7 @@ public class TestJavaICE {
     }
 
     @Test
-    public void testDecrypt_ThinICE() {
+    public void certTripletThinICE_decrypt() {
         byte[] ciphertext = {
                 (byte) 0xde, (byte) 0x24, (byte) 0x0d, (byte) 0x83, (byte) 0xa0, (byte) 0x0a, (byte) 0x9c, (byte) 0xc0
         };
@@ -78,7 +76,7 @@ public class TestJavaICE {
 
 
     @Test
-    public void testEncrypt_ICE2() {
+    public void certTripletICE2_encrypt() {
         byte[] plaintext = {
                 (byte) 0xfe, (byte) 0xdc, (byte) 0xba, (byte) 0x98, (byte) 0x76, (byte) 0x54, (byte) 0x32, (byte) 0x10
         };
@@ -95,7 +93,7 @@ public class TestJavaICE {
     }
 
     @Test
-    public void testDecrypt_ICE2() {
+    public void certTripletICE2_decrypt() {
         byte[] ciphertext = {
                 (byte) 0xf9, (byte) 0x48, (byte) 0x40, (byte) 0xd8, (byte) 0x69, (byte) 0x72, (byte) 0xf2, (byte) 0x1c
         };
@@ -111,11 +109,9 @@ public class TestJavaICE {
         assertArrayEquals(expectedPlaintext, actualPlaintext);
     }
 
-    // END CERTIFICATION TRIPLETS
-
 
     @Test
-    void testStringInput() {
+    void stringEncryptDecrypt() {
         byte[] key = {
                 (byte) 0xde, (byte) 0xad, (byte) 0xbe, (byte) 0xef, (byte) 0x01, (byte) 0x23, (byte) 0x45, (byte) 0x67
         };
@@ -129,7 +125,7 @@ public class TestJavaICE {
 
 
     @Test
-    void testEncryptNon64Multiple() {
+    void encryptUnaligned() {
         byte[] plaintext = {
                 (byte) 0xfe, (byte) 0xdc, (byte) 0xba, (byte) 0x98, (byte) 0x76, (byte) 0x54, (byte) 0x32, (byte) 0x10, (byte) 0x76, (byte) 0x54, (byte) 0x32, (byte) 0x10
         };

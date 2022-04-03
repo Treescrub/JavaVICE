@@ -14,15 +14,18 @@ public class JavaICE {
     }
 
     public static byte[] decrypt(byte[] data, ICEKey iceKey) {
-        long bytesLeft = data.length;
         byte[] plaintext = new byte[data.length];
 
-        for(int i = 0; bytesLeft > 0; i += iceKey.blockSize(), bytesLeft -= iceKey.blockSize()) {
-            int endIndex =  bytesLeft < iceKey.blockSize() ? i + iceKey.blockSize() : plaintext.length;
-            byte[] plaintext_sub = Arrays.copyOfRange(plaintext, i, endIndex);
-            iceKey.decrypt(Arrays.copyOfRange(data, i, i + iceKey.blockSize()), plaintext_sub);
+        for(int i = 0, bytesLeft = plaintext.length; bytesLeft > 0; i += iceKey.blockSize(), bytesLeft -= iceKey.blockSize()) {
+            if(bytesLeft < iceKey.blockSize()) {
+                System.arraycopy(data, data.length - bytesLeft, plaintext, i, bytesLeft);
+                break;
+            }
 
-            System.arraycopy(plaintext_sub, 0, plaintext, i, plaintext_sub.length);
+            byte[] plaintextBlock = new byte[iceKey.blockSize()];
+            iceKey.decrypt(Arrays.copyOfRange(data, i, i + iceKey.blockSize()), plaintextBlock);
+
+            System.arraycopy(plaintextBlock, 0, plaintext, i, plaintextBlock.length);
         }
 
         return plaintext;
@@ -38,17 +41,25 @@ public class JavaICE {
         return encrypt(data, iceKey);
     }
 
-    public static byte[] encrypt(byte[] data, ICEKey iceKey) {
-        int bytesLeft = data.length;
+    private static void copyBlockIntoArray(byte[] array, byte[] block, int start) {
+        for(int i = start, j = 0; i < block.length; i++, j++) {
+            array[i] = block[j];
+        }
+    }
 
+    public static byte[] encrypt(byte[] data, ICEKey iceKey) {
         byte[] ciphertext = new byte[data.length];
 
-        for(int i = 0; bytesLeft > 0; i += iceKey.blockSize(), bytesLeft -= iceKey.blockSize()) {
-            int endIndex =  bytesLeft < iceKey.blockSize() ? i + iceKey.blockSize() : data.length;
-            byte[] ciphertext_sub = Arrays.copyOfRange(ciphertext, i, endIndex);
-            iceKey.encrypt(Arrays.copyOfRange(data, i, i + iceKey.blockSize()), ciphertext_sub);
+        for(int i = 0, bytesLeft = ciphertext.length; bytesLeft > 0; i += iceKey.blockSize(), bytesLeft -= iceKey.blockSize()) {
+            if(bytesLeft < iceKey.blockSize()) {
+                System.arraycopy(data, data.length - bytesLeft, ciphertext, i, bytesLeft);
+                break;
+            }
 
-            System.arraycopy(ciphertext_sub, 0, ciphertext, i, ciphertext_sub.length);
+            byte[] ciphertextBlock = new byte[iceKey.blockSize()];
+            iceKey.encrypt(Arrays.copyOfRange(data, i, i + iceKey.blockSize()), ciphertextBlock);
+
+            System.arraycopy(ciphertextBlock, 0, ciphertext, i, ciphertextBlock.length);
         }
 
         return ciphertext;

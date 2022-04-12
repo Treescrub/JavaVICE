@@ -1,11 +1,6 @@
-import java.nio.charset.Charset;
 import java.util.Arrays;
 
 public class JavaICE {
-
-    public static byte[] decrypt(String data, int level, byte[] key) {
-        return decrypt(data.getBytes(), level, key);
-    }
 
     public static byte[] decrypt(byte[] data, int level, byte[] key) {
         ICEKey iceKey = new ICEKey(level);
@@ -31,9 +26,11 @@ public class JavaICE {
         return plaintext;
     }
 
-    public static byte[] encrypt(String data, int level, byte[] key) {
-        return encrypt(data.getBytes(), level, key);
+    public static byte[] decrypt(String data, int level, byte[] key) {
+        return decrypt(data.getBytes(), level, key);
     }
+
+
 
     public static byte[] encrypt(byte[] data, int level, byte[] key) {
         ICEKey iceKey = new ICEKey(level);
@@ -57,5 +54,9 @@ public class JavaICE {
         }
 
         return ciphertext;
+    }
+
+    public static byte[] encrypt(String data, int level, byte[] key) {
+        return encrypt(data.getBytes(), level, key);
     }
 }

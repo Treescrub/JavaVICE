@@ -41,12 +41,6 @@ public class JavaICE {
         return encrypt(data, iceKey);
     }
 
-    private static void copyBlockIntoArray(byte[] array, byte[] block, int start) {
-        for(int i = start, j = 0; i < block.length; i++, j++) {
-            array[i] = block[j];
-        }
-    }
-
     public static byte[] encrypt(byte[] data, ICEKey iceKey) {
         byte[] ciphertext = new byte[data.length];
 

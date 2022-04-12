@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.concurrent.CompletableFuture;
 
 public class JavaICE {
 
@@ -30,6 +31,18 @@ public class JavaICE {
         return decrypt(data.getBytes(), level, key);
     }
 
+    public static CompletableFuture<byte[]> decryptAsync(byte[] data, int level, byte[] key) {
+        return CompletableFuture.supplyAsync(() -> decrypt(data, level, key));
+    }
+
+    public static CompletableFuture<byte[]> decryptAsync(byte[] data, ICEKey key) {
+        return CompletableFuture.supplyAsync(() -> decrypt(data, key));
+    }
+
+    public static CompletableFuture<byte[]> decryptAsync(String data, int level, byte[] key) {
+        return CompletableFuture.supplyAsync(() -> decrypt(data, level, key));
+    }
+
 
 
     public static byte[] encrypt(byte[] data, int level, byte[] key) {
@@ -58,5 +71,17 @@ public class JavaICE {
 
     public static byte[] encrypt(String data, int level, byte[] key) {
         return encrypt(data.getBytes(), level, key);
+    }
+
+    public static CompletableFuture<byte[]> encryptAsync(byte[] data, int level, byte[] key) {
+        return CompletableFuture.supplyAsync(() -> encrypt(data, level, key));
+    }
+
+    public static CompletableFuture<byte[]> encryptAsync(byte[] data, ICEKey key) {
+        return CompletableFuture.supplyAsync(() -> encrypt(data, key));
+    }
+
+    public static CompletableFuture<byte[]> encryptAsync(String data, int level, byte[] key) {
+        return CompletableFuture.supplyAsync(() -> encrypt(data, level, key));
     }
 }

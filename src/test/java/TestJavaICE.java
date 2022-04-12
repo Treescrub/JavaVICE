@@ -35,7 +35,6 @@ public class TestJavaICE {
         assertArrayEquals(expectedPlaintext, actualPlaintext);
     }
 
-
     @Test
     public void certTripletThinICE_encrypt() {
         byte[] plaintext = getByteArray(0xFE, 0xDC, 0xBA, 0x98, 0x76, 0x54, 0x32, 0x10);
@@ -57,7 +56,6 @@ public class TestJavaICE {
 
         assertArrayEquals(expectedPlaintext, actualPlaintext);
     }
-
 
     @Test
     public void certTripletICE2_encrypt() {
@@ -81,19 +79,6 @@ public class TestJavaICE {
         assertArrayEquals(expectedPlaintext, actualPlaintext);
     }
 
-
-    @Test
-    void stringEncryptDecrypt() {
-        String expectedPlaintext = "Hello ICE world!";
-        byte[] key = getByteArray(0xDE, 0xAD, 0xBE, 0xEF, 0x01, 0x23, 0x45, 0x67);
-
-        byte[] ciphertext = JavaICE.encrypt(expectedPlaintext, 1, key);
-        String actualPlaintext = new String(JavaICE.decrypt(ciphertext, 1, key));
-
-        assertEquals(expectedPlaintext, actualPlaintext);
-    }
-
-
     @Test
     void encryptUnaligned() {
         byte[] plaintext = getByteArray(0xFE, 0xDC, 0xBA, 0x98, 0x76, 0x54, 0x32, 0x10, 0x76, 0x54, 0x32, 0x10);
@@ -114,5 +99,16 @@ public class TestJavaICE {
         byte[] plaintext = JavaICE.decrypt(ciphertext, 1, key);
 
         assertArrayEquals(expectedPlaintext, plaintext);
+    }
+
+    @Test
+    void stringEncryptDecrypt() {
+        String expectedPlaintext = "Hello ICE world!";
+        byte[] key = getByteArray(0xDE, 0xAD, 0xBE, 0xEF, 0x01, 0x23, 0x45, 0x67);
+        byte[] ciphertext = JavaICE.encrypt(expectedPlaintext, 1, key);
+
+        String actualPlaintext = new String(JavaICE.decrypt(ciphertext, 1, key));
+
+        assertEquals(expectedPlaintext, actualPlaintext);
     }
 }

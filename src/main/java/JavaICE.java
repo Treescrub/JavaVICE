@@ -1,3 +1,4 @@
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -31,6 +32,10 @@ public class JavaICE {
 
     public static byte[] decryptFromFile(Key key, Path path) throws IOException {
         return decrypt(key, Files.readAllBytes(path));
+    }
+
+    public static byte[] decryptFromFile(Key key, File file) throws IOException {
+        return decryptFromFile(key, file.toPath());
     }
 
     public static CompletableFuture<byte[]> decryptAsync(Key key, byte[] data) {
@@ -68,6 +73,10 @@ public class JavaICE {
 
     public static byte[] encryptFromFile(Key key, Path path) throws IOException {
         return encrypt(key, Files.readAllBytes(path));
+    }
+
+    public static byte[] encryptFromFile(Key key, File file) throws IOException {
+        return encryptFromFile(key, file.toPath());
     }
 
     public static CompletableFuture<byte[]> encryptAsync(Key key, byte[] data) {

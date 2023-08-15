@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.*;
 
 @CommandLine.Command(mixinStandardHelpOptions = true, version = "1.0", showDefaultValues = true)
-public class JICE implements Runnable {
+public class JVICE implements Runnable {
 
     @CommandLine.ArgGroup(exclusive = true, multiplicity = "1")
     Mode mode;
@@ -29,7 +29,7 @@ public class JICE implements Runnable {
     File[] files;
 
     public static void main(String[] args) {
-        new CommandLine(new JICE()).execute(args);
+        new CommandLine(new JVICE()).execute(args);
     }
 
     @Override
@@ -42,9 +42,9 @@ public class JICE implements Runnable {
             try {
                 byte[] outputBytes;
                 if(mode.decrypt) {
-                    outputBytes = JavaICE.decryptFromFile(ICEKey, file);
+                    outputBytes = JavaVICE.decryptFromFile(ICEKey, file);
                 } else {
-                    outputBytes = JavaICE.encryptFromFile(ICEKey, file);
+                    outputBytes = JavaVICE.encryptFromFile(ICEKey, file);
                 }
 
                 String newFileName = getNewFileName(file.getName());

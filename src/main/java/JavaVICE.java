@@ -5,7 +5,7 @@ import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;
 
-public class JavaICE {
+public class JavaVICE {
 
     public static byte[] decrypt(Key key, byte[] data) {
         byte[] plaintext = new byte[data.length];
